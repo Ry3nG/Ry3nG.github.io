@@ -1,0 +1,2464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zerui Gong</title>
+<meta name="description" content="Zerui Gong: Algorithm Research Intern at SenseTime and MSc Robotics student at NUS, working on embodied intelligence and world models.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zerui Gong — Embodied AI &amp; World Models">
+<meta property="og:description" content="Algorithm Research Intern at SenseTime and MSc Robotics student at NUS, working on embodied intelligence and world models.">
+<meta property="og:url" content="https://ry3ng.github.io/">
+<meta property="og:image" content="https://ry3ng.github.io/assets/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Zerui Gong: embodied intelligence and world models. Algorithm Research Intern at SenseTime, MSc Robotics at NUS.">
+<link rel="canonical" href="https://ry3ng.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ry3ng.github.io/assets/share.jpg">
+<meta name="twitter:title" content="Zerui Gong">
+<meta name="twitter:description" content="Algorithm Research Intern at SenseTime &amp; MSc Robotics at NUS. Embodied intelligence and world models.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2311224a'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='Georgia,serif' font-size='28' letter-spacing='-1'%3EZG%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<script>
+  // Prevent flash of wrong theme before first paint
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+<style>
+/* GOATLab-inspired tokens: action blue, deep navy, SF sans; Newsreader serif for editorial voice */
+:root {
+  --bg: #fbfbfd;
+  --surface: #ffffff;
+  --surface-2: #f4f6fa;
+  --ink: #16181d;
+  --ink-80: #3d424d;
+  --muted: #6c7280;
+  --rule: rgba(17, 34, 74, 0.095);
+  --rule-strong: rgba(17, 34, 74, 0.18);
+  --tint: rgba(17, 34, 74, 0.042);
+  --link: #0066cc;
+  --link-ul: rgba(0, 102, 204, 0.30);
+  --hover: #0071e3;
+  --accent-hi: #2997ff;
+  --accent-glow: rgba(0, 102, 204, 0.35);
+  --navy: #11224a;
+  --navy-2: #172e66;
+  --primary-bg: #11224a;
+  --primary-hover: #172e66;
+  --primary-bd: #11224a;
+  --primary-fg: #f5f7fc;
+  --tag-bg: rgba(0, 102, 204, 0.09);
+  --tag-fg: #0055ad;
+  --tag-bd: rgba(0, 102, 204, 0.22);
+  --tag2-bg: rgba(17, 34, 74, 0.055);
+  --tag2-fg: #344466;
+  --tag2-bd: rgba(17, 34, 74, 0.11);
+  --award-bg: rgba(180, 128, 28, 0.10);
+  --award-fg: #8c5c00;
+  --award-bd: rgba(180, 128, 28, 0.24);
+  --ok-fg: #047857;
+  --ok-bd: rgba(4, 120, 87, 0.32);
+  --ok-on-pri: #34d399;
+  --glow: rgba(0, 102, 204, 0.09);
+  --spot: rgba(0, 102, 204, 0.065);
+  --sel-bg: rgba(0, 102, 204, 0.16);
+  --map-dot: rgba(17, 34, 74, 0.2);
+  --pin-ring: rgba(0, 102, 204, 0.28);
+  --pin-glow: rgba(0, 102, 204, 0.42);
+  --thumb-bg: #ffffff;
+  --thumb-ring: rgba(17, 34, 74, 0.10);
+  --bar: rgba(17, 34, 74, 0.22);
+  --sheen: rgba(255, 255, 255, 0.72);
+  --grain: 0.022;
+  --glass: rgba(251, 251, 253, 0.80);
+  --toast-bg: #11224a;
+  --toast-fg: #f5f7fc;
+  --toast-link: #7cc0ff;
+  --serif: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', 'PingFang SC', system-ui, sans-serif;
+  --mono: 'SF Mono', ui-monospace, Menlo, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --e1: 0 1px 2px rgba(10, 24, 56, 0.05), 0 2px 8px rgba(10, 24, 56, 0.05);
+  --e2: 0 3px 10px rgba(10, 24, 56, 0.07), 0 12px 30px rgba(10, 24, 56, 0.10);
+  --e3: 0 8px 20px rgba(10, 24, 56, 0.12), 0 22px 52px rgba(10, 24, 56, 0.18);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #090d16;
+    --surface: #101624;
+    --surface-2: #151d30;
+    --ink: #f1f4fa;
+    --ink-80: #c3cbd9;
+    --muted: #8691a6;
+    --rule: rgba(148, 175, 224, 0.13);
+    --rule-strong: rgba(148, 175, 224, 0.25);
+    --tint: rgba(148, 175, 224, 0.07);
+    --link: #4da3ff;
+    --link-ul: rgba(77, 163, 255, 0.35);
+    --hover: #7cc0ff;
+    --accent-hi: #58aeff;
+    --accent-glow: rgba(77, 163, 255, 0.42);
+    --primary-bg: #1a3266;
+    --primary-hover: #214080;
+    --primary-bd: rgba(124, 192, 255, 0.28);
+    --primary-fg: #f1f4fa;
+    --tag-bg: rgba(77, 163, 255, 0.14);
+    --tag-fg: #7ec2ff;
+    --tag-bd: rgba(77, 163, 255, 0.30);
+    --tag2-bg: rgba(148, 175, 224, 0.09);
+    --tag2-fg: #b9c6df;
+    --tag2-bd: rgba(148, 175, 224, 0.16);
+    --award-bg: rgba(245, 194, 78, 0.13);
+    --award-fg: #f3c86a;
+    --award-bd: rgba(245, 194, 78, 0.26);
+    --ok-fg: #34d399;
+    --ok-bd: rgba(52, 211, 153, 0.35);
+    --glow: rgba(41, 151, 255, 0.13);
+    --spot: rgba(77, 163, 255, 0.10);
+    --sel-bg: rgba(77, 163, 255, 0.28);
+    --map-dot: rgba(148, 175, 224, 0.22);
+    --pin-ring: rgba(77, 163, 255, 0.36);
+    --pin-glow: rgba(77, 163, 255, 0.48);
+    --thumb-bg: #131a2b;
+    --thumb-ring: rgba(255, 255, 255, 0.14);
+    --bar: rgba(255, 255, 255, 0.30);
+    --sheen: rgba(255, 255, 255, 0.08);
+    --grain: 0.032;
+    --glass: rgba(11, 16, 28, 0.80);
+    --toast-bg: #18233a;
+    --toast-fg: #f1f4fa;
+    --e1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 2px 10px rgba(0, 0, 0, 0.22);
+    --e2: 0 4px 12px rgba(0, 0, 0, 0.36), 0 14px 34px rgba(0, 0, 0, 0.36);
+    --e3: 0 10px 26px rgba(0, 0, 0, 0.48), 0 24px 60px rgba(0, 0, 0, 0.50);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #090d16;
+  --surface: #101624;
+  --surface-2: #151d30;
+  --ink: #f1f4fa;
+  --ink-80: #c3cbd9;
+  --muted: #8691a6;
+  --rule: rgba(148, 175, 224, 0.13);
+  --rule-strong: rgba(148, 175, 224, 0.25);
+  --tint: rgba(148, 175, 224, 0.07);
+  --link: #4da3ff;
+  --link-ul: rgba(77, 163, 255, 0.35);
+  --hover: #7cc0ff;
+  --accent-hi: #58aeff;
+  --accent-glow: rgba(77, 163, 255, 0.42);
+  --primary-bg: #1a3266;
+  --primary-hover: #214080;
+  --primary-bd: rgba(124, 192, 255, 0.28);
+  --primary-fg: #f1f4fa;
+  --tag-bg: rgba(77, 163, 255, 0.14);
+  --tag-fg: #7ec2ff;
+  --tag-bd: rgba(77, 163, 255, 0.30);
+  --tag2-bg: rgba(148, 175, 224, 0.09);
+  --tag2-fg: #b9c6df;
+  --tag2-bd: rgba(148, 175, 224, 0.16);
+  --award-bg: rgba(245, 194, 78, 0.13);
+  --award-fg: #f3c86a;
+  --award-bd: rgba(245, 194, 78, 0.26);
+  --ok-fg: #34d399;
+  --ok-bd: rgba(52, 211, 153, 0.35);
+  --glow: rgba(41, 151, 255, 0.13);
+  --spot: rgba(77, 163, 255, 0.10);
+  --sel-bg: rgba(77, 163, 255, 0.28);
+  --map-dot: rgba(148, 175, 224, 0.22);
+  --pin-ring: rgba(77, 163, 255, 0.36);
+  --pin-glow: rgba(77, 163, 255, 0.48);
+  --thumb-bg: #131a2b;
+  --thumb-ring: rgba(255, 255, 255, 0.14);
+  --bar: rgba(255, 255, 255, 0.30);
+  --sheen: rgba(255, 255, 255, 0.08);
+  --grain: 0.032;
+  --glass: rgba(11, 16, 28, 0.80);
+  --toast-bg: #18233a;
+  --toast-fg: #f1f4fa;
+  --e1: 0 1px 2px rgba(0, 0, 0, 0.30), 0 2px 10px rgba(0, 0, 0, 0.22);
+  --e2: 0 4px 12px rgba(0, 0, 0, 0.36), 0 14px 34px rgba(0, 0, 0, 0.36);
+  --e3: 0 10px 26px rgba(0, 0, 0, 0.48), 0 24px 60px rgba(0, 0, 0, 0.50);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font: 400 15.5px/1.64 var(--sans);
+  letter-spacing: -0.008em;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "cv11" 1;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  position: relative;
+}
+
+::selection {
+  background: var(--sel-bg);
+  color: var(--ink);
+}
+
+/* Ambient aura + hero-scoped archival grain (eliminates dark gradient banding, zero scroll repaint) */
+.ambient-grid {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 540px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(860px 420px at 84% -80px, var(--glow), transparent 68%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 90% at 72% 8%, #000 15%, rgba(0, 0, 0, 0.35) 55%, transparent 82%);
+  mask-image: radial-gradient(ellipse 85% 90% at 72% 8%, #000 15%, rgba(0, 0, 0, 0.35) 55%, transparent 82%);
+}
+.ambient-grid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Scroll reading progress hairline */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  z-index: 100;
+  background: linear-gradient(90deg, var(--navy), var(--link) 55%, var(--accent-hi));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Subtle top brand accent when at scroll = 0 */
+body::before {
+  content: '';
+  display: block;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--navy), var(--accent-glow) 60%, transparent);
+  opacity: 0.45;
+}
+
+/* Editorial underline links */
+a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.u-link {
+  text-decoration: underline;
+  text-decoration-color: var(--link-ul);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color .2s var(--ease), text-decoration-color .22s var(--ease);
+}
+@media (hover: hover) {
+  .u-link:hover {
+    color: var(--hover);
+    text-decoration-color: currentColor;
+  }
+}
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--hover);
+  outline-offset: 2px;
+}
+
+/* ── Floating Frosted Top Navigation ── */
+.topbar-wrap {
+  position: sticky;
+  top: 12px;
+  z-index: 60;
+  max-width: 904px;
+  margin: 0 auto;
+  padding: 10px 24px 0;
+  pointer-events: none;
+}
+.topbar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 44px;
+  padding: 0 8px 0 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), backdrop-filter .35s var(--ease);
+}
+.topbar.scrolled {
+  background: var(--glass);
+  border-color: var(--rule);
+  box-shadow: inset 0 1px 0 var(--sheen), var(--e1);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+}
+.brand-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font: 500 15px/1 var(--serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.01em;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility .3s var(--ease);
+}
+.topbar.scrolled .brand-mini {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-hi), var(--navy));
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.nav-links {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.nav-pill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 999px;
+  background: var(--tint);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(0);
+  transition: transform .36s var(--ease), width .36s var(--ease), opacity .24s var(--ease);
+}
+.nav-pill.show { opacity: 1; }
+.nav-links a {
+  position: relative;
+  z-index: 1;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font: 500 13px/1 var(--sans);
+  color: var(--muted);
+  transition: color .2s var(--ease), background .2s var(--ease), transform .14s var(--ease);
+}
+.nav-links a:active { transform: scale(0.96); }
+@media (hover: hover) {
+  .nav-links a:hover {
+    color: var(--ink);
+    background: var(--tint);
+  }
+  .nav-links a.active:hover { background: transparent; }
+}
+.nav-links a.active {
+  color: var(--link);
+}
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink-80);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 var(--sheen), var(--e1);
+  transition: color .2s var(--ease), border-color .2s var(--ease), transform .25s var(--ease-spring), background .2s var(--ease);
+}
+@media (hover: hover) {
+  .theme-btn:hover {
+    color: var(--ink);
+    border-color: var(--rule-strong);
+    transform: translateY(-1px);
+  }
+  .theme-btn:hover svg { transform: rotate(16deg) scale(1.06); }
+}
+.theme-btn:active { transform: scale(0.94); }
+.theme-btn svg { width: 15px; height: 15px; display: block; transition: transform .35s var(--ease-spring); }
+.theme-btn .icon-sun { display: none; }
+.theme-btn .icon-moon { display: block; }
+:root[data-theme="dark"] .theme-btn .icon-sun { display: block; }
+:root[data-theme="dark"] .theme-btn .icon-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-btn .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .theme-btn .icon-moon { display: none; }
+}
+
+/* ── Main container ── */
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 904px;
+  margin: 0 auto;
+  padding: 28px 24px 56px;
+}
+
+/* ── Hero / Intro ── */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 226px;
+  gap: 52px;
+  align-items: center;
+  padding: 12px 0 18px;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: 500 11.5px/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+}
+.eyebrow .ping {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--link);
+}
+.eyebrow .ping::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid var(--link);
+  opacity: 0;
+  animation: radar 2.8s var(--ease) infinite;
+}
+@keyframes radar {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  80%, 100% { transform: scale(2.1); opacity: 0; }
+}
+.name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 14px;
+}
+.name {
+  margin: 0;
+  font: 400 48px/1.04 var(--serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.024em;
+  text-wrap: balance;
+}
+.name-cn {
+  font: 400 20px/1 'PingFang SC', 'Songti SC', 'Noto Serif SC', serif;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  opacity: 0.78;
+}
+.tagline {
+  margin: 10px 0 22px;
+  color: var(--muted);
+  font-size: 14.5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.tagline .sep { color: var(--rule-strong); }
+.intro p {
+  margin: 0 0 12px;
+  color: var(--ink-80);
+  max-width: 64ch;
+  text-wrap: pretty;
+}
+.intro p b { color: var(--ink); font-weight: 600; }
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 22px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 500 13.5px/1 var(--sans);
+  box-shadow: inset 0 1px 0 var(--sheen), var(--e1);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), box-shadow .28s var(--ease), transform .24s var(--ease), color .2s var(--ease), background .2s var(--ease);
+}
+#email-btn { min-width: 92px; }
+@media (hover: hover) {
+  .btn:hover {
+    color: var(--link);
+    border-color: var(--rule-strong);
+    box-shadow: inset 0 1px 0 var(--sheen), var(--e2);
+    transform: translateY(-2px);
+  }
+  .btn:hover svg { transform: scale(1.08); }
+  .btn.primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-bd);
+    color: #ffffff;
+  }
+}
+.btn:active { transform: translateY(0) scale(0.97); }
+.btn svg { width: 14px; height: 14px; flex: none; transition: transform .25s var(--ease); }
+.btn.primary {
+  background: var(--primary-bg);
+  border-color: var(--primary-bd);
+  color: var(--primary-fg);
+}
+.btn .check-icon { display: none; }
+.btn.copied .mail-icon { display: none; }
+.btn.copied .check-icon { display: block; color: var(--ok-on-pri); }
+
+/* Portrait with dual-layer parallax + quiet architectural offset frame */
+.portrait {
+  position: relative;
+  justify-self: end;
+  width: 226px;
+  --px: 0px;
+  --py: 0px;
+}
+.portrait-back {
+  position: absolute;
+  inset: 9px -9px -9px 9px;
+  border-radius: 19px;
+  background: var(--surface-2);
+  border: 1px solid var(--rule-strong);
+  z-index: 0;
+  transform: translate3d(calc(var(--px) * -1.2), calc(var(--py) * -1.2), 0);
+  transition: transform .4s var(--ease), opacity .3s var(--ease), border-color .3s var(--ease);
+}
+.portrait-frame {
+  position: relative;
+  z-index: 1;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--e3);
+  border: 1px solid var(--rule-strong);
+  transform: translate3d(var(--px), var(--py), 0);
+  transition: transform .4s var(--ease), box-shadow .35s var(--ease);
+}
+.portrait-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(255, 255, 255, 0.14) 0%, transparent 42%, transparent 100%);
+  box-shadow: inset 0 0 0 1px var(--thumb-ring);
+  border-radius: inherit;
+  opacity: 0.7;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .portrait:hover .portrait-frame::after { opacity: 1; }
+  .portrait:hover img { transform: scale(1.02); }
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform .55s var(--ease), filter .35s var(--ease);
+}
+:root[data-theme="dark"] .portrait img { filter: brightness(0.94) contrast(1.02); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .portrait img { filter: brightness(0.94) contrast(1.02); }
+}
+
+/* Choreographed hero entrance */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-stagger {
+  opacity: 0;
+  animation: riseIn .68s var(--ease) forwards;
+  animation-delay: calc(var(--d, 0) * 65ms);
+}
+
+/* ── Hero map: dotted world map fading cleanly above the bio; Singapore pin anchored in JS ── */
+.intro { position: relative; }
+.intro > *:not(.geo) { position: relative; z-index: 1; }
+.geo {
+  --sx: 78.839%; --sy: 55.211%;
+  position: absolute; z-index: 0; left: 0; top: 0; width: 1100px; aspect-ratio: 1100 / 391; pointer-events: none;
+  --gx: 0px; --gy: 0px;
+  transform: translate3d(var(--gx), var(--gy), 0);
+  transition: transform .9s var(--ease);
+}
+.geo-dots-wrap {
+  position: absolute;
+  inset: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 54%, rgba(0, 0, 0, 0.35) 74%, transparent 94%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 54%, rgba(0, 0, 0, 0.35) 74%, transparent 94%);
+}
+.geo-dots {
+  position: absolute; inset: 0; background: var(--map-dot);
+  -webkit-mask: url(assets/world-dots.png) 0 0 / 100% 100% no-repeat;
+          mask: url(assets/world-dots.png) 0 0 / 100% 100% no-repeat;
+  clip-path: circle(0px at var(--sx) var(--sy));
+  animation: geoReveal 2.4s cubic-bezier(0.16, 1, 0.3, 1) .4s forwards;
+}
+@keyframes geoReveal { to { clip-path: circle(1000px at var(--sx) var(--sy)); } }
+.geo-pin { position: absolute; left: var(--sx); top: var(--sy); z-index: 2; }
+.geo-pin i, .geo-pin::before, .geo-pin::after {
+  position: absolute; left: -4.5px; top: -4.5px; width: 9px; height: 9px; border-radius: 50%; content: '';
+}
+.geo-pin i {
+  background: var(--link);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px var(--pin-ring), 0 2px 10px var(--pin-glow);
+  transform: scale(0); animation: pinDrop .7s var(--ease-spring) .35s forwards;
+}
+.geo-pin::before, .geo-pin::after { border: 1.25px solid var(--link); opacity: 0; animation: pinRing 3.4s var(--ease) 1.1s infinite; }
+.geo-pin::after { animation-delay: 2.8s; }
+@keyframes pinDrop { to { transform: scale(1); } }
+@keyframes pinRing { 0% { transform: scale(1); opacity: .5; } 75%, 100% { transform: scale(5.2); opacity: 0; } }
+
+/* Callout: clickable coordinates <-> live SGT pill hanging off the pin by an elbow leader */
+.geo-pin .lead-line {
+  position: absolute; left: 0; bottom: 7px; width: 22px; height: 30px;
+  border-top: 1px solid var(--muted); border-left: 1px solid var(--muted); border-top-left-radius: 8px; opacity: .55;
+  clip-path: inset(100% 0 0 0); animation: leadDraw .55s var(--ease) .95s forwards;
+}
+@keyframes leadDraw { 55% { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.callout {
+  position: absolute; left: 22px; bottom: 26px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+  padding: 5px 11px; border-radius: 999px; pointer-events: auto; cursor: pointer;
+  background: var(--glass); border: 1px solid var(--rule); box-shadow: inset 0 1px 0 var(--sheen), var(--e1);
+  -webkit-backdrop-filter: blur(10px) saturate(150%); backdrop-filter: blur(10px) saturate(150%);
+  font: 500 11px/1.2 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  opacity: 0; transform: translate(-8px, 3px); animation: callIn .6s var(--ease) 1.2s forwards;
+  transition: border-color .2s var(--ease), color .2s var(--ease), box-shadow .25s var(--ease);
+}
+.callout b { color: var(--ink); font-weight: 600; }
+@media (hover: hover) {
+  .callout:hover { border-color: var(--rule-strong); color: var(--ink-80); box-shadow: inset 0 1px 0 var(--sheen), var(--e2); }
+  .geo-pin:has(.callout:hover) i { transform: scale(1.35); transition: transform .3s var(--ease-spring); }
+}
+@keyframes callIn { to { opacity: 1; transform: none; } }
+
+@media (min-width: 721px) {
+  .eyebrow { display: none; }
+  .intro { padding-top: 76px; }
+}
+@media (max-width: 720px) { .geo { display: none; } }
+
+/* ── Name reveal: rises out of a mask ── */
+.name { animation: nameIn 1s var(--ease) .08s both; }
+@keyframes nameIn { from { clip-path: inset(0 0 100% 0); transform: translateY(34%); } to { clip-path: inset(-10% -4% -18% -4%); transform: none; } }
+
+/* ── Section heads draw in ── */
+.sec-head.reveal h2::before { transform: scaleY(0); transform-origin: 50% 100%; transition: transform .55s var(--ease-spring) .1s; }
+.sec-head.reveal .sec-rule { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.1s var(--ease) .18s; }
+.sec-head.in h2::before { transform: none; }
+.sec-head.in .sec-rule { transform: none; }
+
+/* ── Figure slideshows on paper thumbnails ── */
+.thumb.slides img.s {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.03);
+  transition: opacity .85s var(--ease), transform .55s var(--ease);
+}
+.thumb.slides img.s.on { opacity: 1; transform: scale(1); }
+@media (hover: hover) {
+  .thumb.slides:hover img.s.on { transform: scale(1.02); }
+}
+.sbar {
+  position: absolute;
+  z-index: 4;
+  left: 8px;
+  right: 8px;
+  top: 7px;
+  display: flex;
+  gap: 3px;
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+}
+.thumb.slides.live .sbar { opacity: 1; }
+.sbar i {
+  position: relative;
+  flex: 1;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--bar);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
+  overflow: visible;
+  cursor: pointer;
+}
+.sbar i::before {
+  content: '';
+  position: absolute;
+  inset: -8px 0 -10px;
+}
+.sbar i::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: var(--link);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+.sbar i.done::after { transform: scaleX(1); }
+.sbar i.run::after { animation: sfill var(--sdur, 3.4s) linear forwards; }
+.thumb.slides.paused .sbar i.run::after { animation-play-state: paused; }
+@keyframes sfill { to { transform: scaleX(1); } }
+
+/* ── Section Headings ── */
+section[id] { scroll-margin-top: 76px; }
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 58px 0 16px;
+}
+.sec-head h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font: 400 26px/1.2 var(--serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.018em;
+  white-space: nowrap;
+  text-wrap: balance;
+}
+.sec-head h2::before {
+  content: '';
+  width: 4px;
+  height: 19px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent-hi), var(--navy));
+  flex: none;
+}
+.sec-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--rule-strong), var(--rule) 55%, transparent);
+}
+.lead {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font: italic 400 16.5px/1.55 var(--serif);
+  font-optical-sizing: auto;
+  text-wrap: balance;
+}
+
+/* ── Papers & Beyond Cards ── */
+.papers { display: grid; gap: 8px; }
+.paper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+  padding: 15px 16px;
+  margin: 0 -16px;
+}
+
+.thumb {
+  position: relative;
+  display: block;
+  width: 236px;
+  margin-top: 3px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--thumb-bg);
+  box-shadow: var(--e1);
+  cursor: zoom-in;
+  transition: box-shadow .35s var(--ease), transform .35s var(--ease);
+}
+/* Mounted-plate inner hairline on top of media (clean edges for both white figures & dark videos) */
+.thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px var(--thumb-ring);
+  pointer-events: none;
+  z-index: 3;
+}
+.thumb img, .thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s var(--ease), filter .35s var(--ease);
+}
+:root[data-theme="dark"] .thumb img,
+:root[data-theme="dark"] .thumb video { filter: brightness(0.88) contrast(1.03) saturate(0.98); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .thumb img,
+  :root:not([data-theme="light"]) .thumb video { filter: brightness(0.88) contrast(1.03) saturate(0.98); }
+}
+@media (hover: hover) {
+  :root[data-theme="dark"] .thumb:hover img,
+  :root[data-theme="dark"] .thumb:hover video { filter: brightness(0.96) contrast(1.01) saturate(1); }
+  .thumb:hover {
+    box-shadow: var(--e2);
+    transform: translateY(-2px);
+  }
+  .thumb:hover img,
+  .thumb:hover video {
+    transform: scale(1.02);
+  }
+}
+@media (prefers-color-scheme: dark) and (hover: hover) {
+  :root:not([data-theme="light"]) .thumb:hover img,
+  :root:not([data-theme="light"]) .thumb:hover video { filter: brightness(0.96) contrast(1.01) saturate(1); }
+}
+
+.pbody { position: relative; z-index: 1; }
+.ptitle {
+  display: inline;
+  font: 600 15.8px/1.38 var(--sans);
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  text-wrap: balance;
+  transition: color .2s var(--ease);
+}
+.ptitle .arr {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.85em;
+  color: var(--muted);
+  opacity: 0;
+  transform: translate(-3px, 2px);
+  transition: opacity .22s var(--ease), transform .25s var(--ease), color .2s var(--ease);
+}
+@media (hover: hover) {
+  .ptitle:hover { color: var(--link); }
+  .ptitle:hover .arr {
+    opacity: 0.85;
+    transform: translate(0, 0);
+    color: var(--link);
+  }
+}
+
+.pmeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0 6px;
+}
+.venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font: 600 11.5px/1.5 var(--sans);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .015em;
+  border: 1px solid transparent;
+}
+.venue.pub {
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  border-color: var(--tag-bd);
+}
+.venue.pre {
+  background: var(--tag2-bg);
+  color: var(--tag2-fg);
+  border-color: var(--tag2-bd);
+}
+
+.authors {
+  margin: 0 0 6px;
+  color: var(--muted);
+  font-size: 13.4px;
+  line-height: 1.5;
+}
+.authors sup { color: var(--link); font-weight: 600; font-size: .72em; margin-left: 1px; }
+
+.tldr {
+  margin: 0 0 8px;
+  font-size: 13.8px;
+  line-height: 1.54;
+  color: var(--ink-80);
+  font-variant-numeric: tabular-nums;
+  text-wrap: pretty;
+}
+
+.plinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 0;
+  font-size: 13.5px;
+}
+.plinks a, .plinks button {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--link);
+  font: 500 13.5px/1.3 var(--sans);
+  cursor: pointer;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: color .18s var(--ease), background-size .25s var(--ease), transform .14s var(--ease);
+}
+.plinks button:active { transform: scale(0.96); }
+@media (hover: hover) {
+  .plinks a:hover, .plinks button:hover {
+    color: var(--hover);
+    background-size: 100% 1px;
+  }
+}
+.plinks .sep { color: var(--rule-strong); padding: 0 8px; user-select: none; }
+
+/* Smooth BibTeX Accordion */
+.bib-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  visibility: hidden;
+  transition: grid-template-rows .34s var(--ease), opacity .28s var(--ease), margin-top .34s var(--ease), visibility .34s var(--ease);
+}
+.bib-wrap.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 10px;
+  visibility: visible;
+}
+.bib-inner { overflow: hidden; }
+.bib-box {
+  position: relative;
+  border-radius: 11px;
+  border: 1px solid var(--rule);
+  background: var(--surface-2);
+  box-shadow: inset 0 1px 0 var(--sheen);
+  padding: 11px 14px 12px;
+}
+.bib-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.bib-label {
+  font: 600 10.5px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.copy-bib {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 68px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--ink-80);
+  font: 500 11.5px/1.2 var(--sans);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, transform .14s var(--ease);
+}
+@media (hover: hover) {
+  .copy-bib:hover { border-color: var(--rule-strong); color: var(--ink); }
+}
+.copy-bib:active { transform: scale(0.95); }
+.copy-bib.copied { color: var(--ok-fg); border-color: var(--ok-bd); }
+.bib-box pre {
+  margin: 0;
+  font: 11.8px/1.58 var(--mono);
+  color: var(--ink-80);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.note { margin: 12px 0 0; font-size: 13px; color: var(--muted); }
+.note sup { color: var(--link); font-weight: 600; }
+
+/* ── Timeline ── */
+.tl { list-style: none; margin: 0; padding: 0; position: relative; --rail-top: 22px; --rail-h: 0px; --fill: 0; }
+.tl li {
+  display: grid;
+  grid-template-columns: 158px minmax(0, 1fr);
+  gap: 14px;
+  padding: 9px 10px;
+  margin: 0 -10px;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+.tl .when {
+  font: 12.8px/1.9 var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  padding-left: 20px;
+  position: relative;
+}
+.tl .when::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1.5px solid var(--link);
+  background: var(--bg);
+  z-index: 1;
+  transition: transform .25s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
+}
+.tl li.now .when::before {
+  background: var(--link);
+  box-shadow: 0 0 0 4px var(--tag-bg);
+  animation: nodePulse 2.8s ease-in-out infinite;
+}
+@keyframes nodePulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--tag-bg); }
+  50% { box-shadow: 0 0 0 7px rgba(0, 102, 204, 0.03); }
+}
+.tl::before, .tl::after {
+  content: ''; position: absolute; left: 3px; width: 1px; top: var(--rail-top); height: var(--rail-h);
+  border-radius: 1px; pointer-events: none;
+}
+.tl::before { background: var(--rule-strong); }
+.tl::after {
+  width: 1.5px; left: 2.75px;
+  background: linear-gradient(180deg, var(--accent-hi), var(--link));
+  transform-origin: 50% 0; transform: scaleY(var(--fill));
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+.tl li.lit .when::before { background: var(--link); box-shadow: 0 0 0 3px var(--tag-bg); }
+.tl .what { color: var(--ink-80); }
+.tl .what b { color: var(--ink); font-weight: 600; }
+.tl .what small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.award-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--award-bg);
+  color: var(--award-fg);
+  border: 1px solid var(--award-bd);
+  font: 600 11.8px/1.5 var(--sans);
+}
+.award-badge svg { width: 12px; height: 12px; flex: none; }
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .62s var(--ease), transform .62s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Footer ── */
+footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.foot-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.foot-btn {
+  border: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--tint);
+  color: var(--muted);
+  font: 500 12px/1.2 var(--sans);
+  cursor: pointer;
+  transition: color .2s, background .2s, transform .22s var(--ease);
+}
+@media (hover: hover) {
+  .foot-btn:hover { color: var(--ink); transform: translateY(-1px); }
+}
+.foot-btn:active { transform: scale(0.95); }
+
+/* ── Floating Toast ── */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: 120;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--toast-bg);
+  color: var(--toast-fg);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), var(--e3);
+  font: 500 13px/1 var(--sans);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 14px) scale(0.96);
+  pointer-events: none;
+  transition: opacity .26s var(--ease), transform .32s var(--ease), visibility .26s var(--ease);
+}
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+.toast a {
+  color: var(--toast-link);
+  font-weight: 600;
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  padding-left: 10px;
+}
+@media (hover: hover) {
+  .toast a:hover { color: #ffffff; }
+}
+
+/* ── Native Theater Lightbox (<dialog>) ── */
+.lb {
+  padding: 0;
+  margin: auto;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  max-width: min(94vw, 920px);
+  width: 100%;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(10px) scale(0.975);
+  transition: opacity .26s var(--ease), transform .3s var(--ease), display .26s allow-discrete, overlay .26s allow-discrete;
+}
+.lb[open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  .lb[open] { opacity: 0; transform: translateY(10px) scale(0.975); }
+}
+.lb::backdrop {
+  background: rgba(6, 10, 18, 0.78);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity .26s var(--ease), display .26s allow-discrete, overlay .26s allow-discrete;
+}
+.lb[open]::backdrop { opacity: 1; }
+@starting-style {
+  .lb[open]::backdrop { opacity: 0; }
+}
+.lb-shell {
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  box-shadow: inset 0 1px 0 var(--sheen), var(--e3);
+}
+.lb-stage {
+  position: relative;
+  background: var(--thumb-bg);
+  aspect-ratio: 16 / 10;
+  max-height: 72vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.lb-stage img, .lb-stage video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--rule-strong);
+  background: var(--glass);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--e1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: transform .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+}
+.lb-nav.prev { left: 12px; }
+.lb-nav.next { right: 12px; }
+.lb-nav[hidden] { display: none; }
+.lb-nav:active { transform: translateY(-50%) scale(0.93); }
+@media (hover: hover) {
+  .lb-nav:hover { border-color: var(--link); color: var(--link); }
+}
+.lb-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 16px;
+  border-top: 1px solid var(--rule);
+  background: var(--surface);
+}
+.lb-meta { min-width: 0; }
+.lb-title {
+  margin: 0;
+  font: 600 14.5px/1.35 var(--sans);
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lb-cap {
+  margin: 2px 0 0;
+  font: 400 12.8px/1.4 var(--sans);
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lb-count {
+  font: 500 11.5px/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--link);
+  flex: none;
+}
+.lb-cap-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lb-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+}
+.lb-ext {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface-2);
+  color: var(--ink);
+  font: 500 12.5px/1 var(--sans);
+  white-space: nowrap;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+@media (hover: hover) {
+  .lb-ext:hover { color: var(--link); border-color: var(--rule-strong); }
+}
+.lb-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--surface-2);
+  color: var(--muted);
+  font: 400 18px/1 var(--sans);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color .2s var(--ease), border-color .2s var(--ease), transform .16s var(--ease);
+}
+.lb-close:active { transform: scale(0.93); }
+@media (hover: hover) {
+  .lb-close:hover { color: var(--ink); border-color: var(--rule-strong); }
+}
+
+/* View Transitions circular theme switch */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ── Responsive (strictly descending breakpoints) ── */
+/* Tablet portrait: two-column hero is narrow, so keep the four actions on an even grid */
+@media (min-width: 721px) and (max-width: 960px) {
+  .contact { display: grid; grid-template-columns: repeat(2, max-content); }
+}
+
+/* Touch screens: grow small inline actions to a comfortable hit area without changing their look */
+@media (pointer: coarse) {
+  .plinks a, .plinks button { position: relative; }
+  .plinks a::after, .plinks button::after { content: ''; position: absolute; inset: -12px -6px; }
+  .nav-links a { padding-top: 9px; padding-bottom: 9px; }
+}
+
+@media (max-width: 720px) {
+  .topbar-wrap { top: 8px; padding: 6px 12px 0; }
+  .topbar { height: 40px; padding: 0 4px 0 6px; gap: 6px; }
+  .brand-mini { display: none; }
+  .nav-right { flex: 1; min-width: 0; }
+  .nav-links { flex: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { padding: 6px 9px; font-size: 12.5px; white-space: nowrap; }
+  .theme-btn { width: 30px; height: 30px; flex: none; }
+
+  /* Hero: name and roles beside a compact full-length portrait, then bio and actions full width */
+  .wrap { padding: 14px 20px 44px; }
+  .intro { grid-template-columns: minmax(0, 1fr) 96px; column-gap: 14px; row-gap: 0; align-items: start; padding: 18px 0 8px; }
+  .intro > div:not(.geo):not(.portrait) { display: contents; }
+  .intro .eyebrow { grid-column: 1 / -1; margin-bottom: 14px; font-size: 10.5px; letter-spacing: .05em; }
+  .intro .name-row { grid-column: 1; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .intro .tagline { grid-column: 1; margin: 10px 0 0; font-size: 13px; letter-spacing: -.01em; }
+  .portrait { grid-column: 2; grid-row: 2 / span 2; justify-self: end; width: 96px; }
+  .portrait-back { inset: 6px -6px -6px 6px; border-radius: 14px; }
+  .portrait-frame { border-radius: 13px; }
+  .intro p:not(.tagline) { grid-column: 1 / -1; font-size: 15.5px; line-height: 1.62; }
+  .intro .tagline + p { margin-top: 20px; }
+  .intro .contact { grid-column: 1 / -1; }
+  .name { font-size: 36px; }
+  .name-cn { font-size: 16px; letter-spacing: .12em; }
+  .sec-head { margin: 46px 0 14px; }
+}
+
+@media (max-width: 640px) {
+  /* Compact cards: small thumbnail beside title + venue; authors, summary and links full width below */
+  .papers { gap: 4px; }
+  .paper { grid-template-columns: 112px minmax(0, 1fr); column-gap: 14px; row-gap: 0; align-items: start; margin: 0 -10px; padding: 14px 10px; }
+  .paper .pbody { display: contents; }
+  .paper .thumb { grid-column: 1; grid-row: 1 / span 2; width: 112px; margin-top: 2px; border-radius: 8px; }
+  .paper .ptitle { grid-column: 2; grid-row: 1; display: block; font-size: 14.5px; line-height: 1.35; }
+  .paper .ptitle .arr { display: none; }
+  .paper .pmeta { grid-column: 2; grid-row: 2; align-self: start; margin: 6px 0 0; }
+  .paper .authors { grid-column: 1 / -1; margin: 12px 0 4px; font-size: 13px; }
+  .paper .tldr { grid-column: 1 / -1; margin-top: 6px; font-size: 13.5px; }
+  .paper .authors + .tldr { margin-top: 0; }
+  .paper .plinks, .paper .bib-wrap { grid-column: 1 / -1; }
+  .sbar { left: 5px; right: 5px; top: 5px; }
+  .lb-bar { flex-direction: column; align-items: stretch; gap: 10px; }
+  .lb-actions { justify-content: space-between; }
+}
+
+@media (max-width: 520px) {
+  .tagline { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .tagline .sep { display: none; }
+  .tl li { grid-template-columns: 1fr; gap: 2px; }
+  .tl .what { padding-left: 20px; }
+  .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .contact .btn { justify-content: center; min-height: 42px; }
+}
+
+@media (max-width: 380px) {
+  .nav-links { -webkit-mask-image: linear-gradient(90deg, #000 90%, transparent); mask-image: linear-gradient(90deg, #000 90%, transparent); }
+  .intro { grid-template-columns: minmax(0, 1fr) 80px; column-gap: 12px; }
+  .portrait { width: 80px; }
+  .intro .tagline { font-size: 12.5px; }
+  .name { font-size: 33px; }
+}
+
+/* Very narrow screens (folded phones): keep name and coordinates on one line each */
+@media (max-width: 300px) {
+  .wrap { padding-left: 14px; padding-right: 14px; }
+  .intro { grid-template-columns: minmax(0, 1fr) 64px; column-gap: 10px; }
+  .portrait { width: 64px; }
+  .name { font-size: 27px; white-space: nowrap; }
+  .intro .eyebrow { font-size: 9px; letter-spacing: .02em; white-space: nowrap; }
+  .intro .tagline { font-size: 12px; }
+  .contact { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .hero-stagger, .reveal { opacity: 1 !important; transform: none !important; }
+  .geo-dots { clip-path: none; }
+  .geo-pin i, .callout { transform: none; opacity: 1; }
+  .geo-pin .lead-line { clip-path: none; }
+}
+
+/* ── Academic Print / Save-to-PDF Stylesheet ── */
+@page { size: A4; margin: 16mm 16mm 18mm; }
+@media print {
+  :root, :root[data-theme="dark"] {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f6f7f9;
+    --ink: #111111;
+    --ink-80: #333333;
+    --muted: #555555;
+    --link: #004c99;
+    --rule: #dcdcdc;
+    --rule-strong: #bbbbbb;
+    color-scheme: light;
+  }
+  body { background: #fff; color: #111; font-size: 10.5pt; }
+  body::before, .progress, .ambient-grid, .topbar-wrap, .geo, .toast, .sbar, .foot-btn, .lb, .bib-wrap { display: none !important; }
+  .wrap { max-width: 100%; padding: 0; }
+  .hero-stagger, .reveal { opacity: 1 !important; transform: none !important; }
+  .intro { padding-top: 0; gap: 28px; }
+  .portrait-back { display: none; }
+  .portrait-frame { box-shadow: none; }
+  .paper, .tl li { break-inside: avoid; page-break-inside: avoid; }
+  .paper { margin: 0; padding: 10px 0; border-bottom: 1px solid #e5e5e5; border-radius: 0; }
+  .thumb { box-shadow: none; }
+  .thumb img, .thumb video, .portrait img { filter: none !important; }
+  .u-link { text-decoration: none; color: #111; }
+}
+</style>
+</head>
+<body id="top">
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="ambient-grid" aria-hidden="true"></div>
+
+<!-- ── Floating Frosted Topbar ── -->
+<div class="topbar-wrap">
+  <nav class="topbar" id="topbar" aria-label="Page navigation">
+    <a class="brand-mini" id="brand-mini" href="#top" tabindex="-1"><span class="brand-dot" aria-hidden="true"></span>Zerui Gong</a>
+    <div class="nav-right">
+      <div class="nav-links" id="nav-links">
+        <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
+        <a href="#research">Research</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#community">Beyond</a>
+      </div>
+      <button class="theme-btn" id="theme" aria-label="Toggle color theme" title="Toggle light / dark theme (T)">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<main class="wrap">
+
+  <!-- ── Intro ── -->
+  <section class="intro">
+    <div class="geo" id="geo"><div class="geo-dots-wrap" aria-hidden="true"><div class="geo-dots"></div></div><span class="geo-pin"><i aria-hidden="true"></i><span class="lead-line" aria-hidden="true"></span><button class="callout" type="button" data-loc-toggle title="Toggle coordinates / Singapore local time"><b>Singapore</b><span data-coords>1.2966&deg; N, 103.7764&deg; E</span></button></span></div>
+    <div>
+      <button class="eyebrow hero-stagger" type="button" data-loc-toggle style="--d:0" title="Toggle coordinates / Singapore local time"><span class="ping" aria-hidden="true"></span><span>Singapore &middot; <span data-coords>1.2966&deg; N, 103.7764&deg; E</span></span></button>
+      <div class="name-row hero-stagger" style="--d:1">
+        <h1 class="name">Zerui Gong</h1>
+        <span class="name-cn" lang="zh-Hans">龚泽睿</span>
+      </div>
+      <p class="tagline hero-stagger" style="--d:2">
+        <span>Algorithm Research Intern, SenseTime</span>
+        <span class="sep">&middot;</span>
+        <span>M.Sc. Robotics, NUS</span>
+      </p>
+
+      <p class="hero-stagger" style="--d:3">I am an Algorithm Research Intern at <a class="u-link" href="https://www.sensetime.com/en" target="_blank" rel="noopener">SenseTime</a> in Singapore and an M.Sc. Robotics student at the <a class="u-link" href="https://nus.edu.sg" target="_blank" rel="noopener">National University of Singapore</a>. My research focuses on <b>embodied intelligence</b> and <b>world models</b>—studying how robots predict physical dynamics, retain long-horizon memory, and plan multi-step actions in the real world.</p>
+      <p class="hero-stagger" style="--d:4">Previously, I received my B.Eng. in Computer Engineering from <a class="u-link" href="https://www.ntu.edu.sg" target="_blank" rel="noopener">Nanyang Technological University</a>, where I conducted my final-year research at <a class="u-link" href="https://www.mmlab-ntu.com" target="_blank" rel="noopener">MMLab@NTU</a> with <a class="u-link" href="https://www.mmlab-ntu.com/person/ccloy/" target="_blank" rel="noopener">Prof. Chen Change Loy</a>.</p>
+
+      <div class="contact hero-stagger" style="--d:5">
+        <button class="btn primary" id="email-btn" type="button" title="Copy email address">
+          <svg class="mail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span id="email-label">Email</span>
+        </button>
+        <a class="btn" href="https://scholar.google.com/citations?user=sjiwhzcAAAAJ" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3 1 9l11 6 9-4.9V17h2V9L12 3zm-6.8 9.6v3.2L12 19.5l6.8-3.7v-3.2L12 16.3l-6.8-3.7z"/></svg>Google Scholar</a>
+        <a class="btn" href="https://github.com/Ry3nG" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.2c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/></svg>GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/gongzerui13" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4v11H3zM9.5 9.5h3.8v1.6h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4z"/></svg>LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="portrait hero-stagger" id="portrait" style="--d:3">
+      <div class="portrait-back" aria-hidden="true"></div>
+      <div class="portrait-frame">
+        <img src="assets/portrait.jpg" alt="Portrait of Zerui Gong" width="960" height="1280">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Research ── -->
+  <section id="research">
+    <div class="sec-head reveal">
+      <h2>Research</h2>
+      <div class="sec-rule" aria-hidden="true"></div>
+    </div>
+    <p class="lead reveal">From photorealistic style transfer and multimodal generation toward world models and generalist robot policies.</p>
+
+    <div class="papers">
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://pawteam-eai.github.io/em-wam/#teaser" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/papers/emwam.mp4" poster="assets/papers/emwam.jpg" muted loop playsinline preload="none" aria-label="EM-WAM teaser: LingBot-VA misses a transient indicator light while EM-WAM spots it from its prediction error"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://pawteam-eai.github.io/em-wam/" target="_blank" rel="noopener">Endogenous and Exogenous Memory for World Action Models<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Preprint, 2026</span>
+          </div>
+          <div class="authors">Zerui Gong<sup>*</sup>, Marina Barannikov<sup>*</sup>, Zhonghua Wu<sup>*†</sup>, Shanshan Lu, Junjie Gao, Zhe Yang, Jinglin He, Quanzhou Li, Weijie Qiao, Qinyue Li, Qingyi Tao, Chen Change Loy</div>
+          <p class="tldr">Gives a world action model two memories driven by its video expert, with no extra supervision: endogenous memory tracks task progress, and exogenous memory records where the scene departs from the model&#8217;s prediction. Introduces RMBench-Dynamic; 58.8% there, 81.7% on RMBench, and 57 of 60 real-robot trials.</p>
+          <div class="plinks">
+            <a href="https://pawteam-eai.github.io/em-wam/" target="_blank" rel="noopener">project page</a><span class="sep">/</span>
+            <a href="https://pawteam-eai.github.io/em-wam/#video" target="_blank" rel="noopener">video</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@misc{gong2026emwam,
+  title  = {Endogenous and Exogenous Memory for World Action Models},
+  author = {Gong, Zerui and Barannikov, Marina and Wu, Zhonghua and Lu, Shanshan and Gao, Junjie and Yang, Zhe and He, Jinglin and Li, Quanzhou and Qiao, Weijie and Li, Qinyue and Tao, Qingyi and Loy, Chen Change},
+  year   = {2026},
+  url    = {https://pawteam-eai.github.io/em-wam/}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://pawteam-eai.github.io/native-lam/" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/papers/nativelam.mp4" poster="assets/papers/nativelam-poster.jpg" muted loop playsinline preload="none" aria-label="Native LAM explainer animation: registers read motion out of a video world model"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://pawteam-eai.github.io/native-lam/" target="_blank" rel="noopener">World Models as Native Latent Action Models<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">arXiv, 2026</span>
+          </div>
+          <div class="authors">Qinyue Li<sup>*</sup>, Weijie Qiao<sup>*</sup>, Qingyi Tao<sup>*†</sup>, Zerui Gong, Zhe Yang, Quanzhou Li, Taolin Zhang, Jinglin He, Zhonghua Wu, Chen Change Loy</div>
+          <p class="tldr">Uses one pretrained video diffusion transformer as both inverse and forward dynamics model, with learnable dynamics registers as the only bridge, so a video&#8217;s motion is distilled into a compact latent action. The latents replay across robots, scenes and from human hands to robots, and teach PAWlicy, a VLA pretraining recipe that reaches 93.6% on RoboTwin 2.0.</p>
+          <div class="plinks">
+            <a href="https://pawteam-eai.github.io/native-lam/" target="_blank" rel="noopener">project page</a><span class="sep">/</span>
+            <a href="https://arxiv.org/abs/2611.30898" target="_blank" rel="noopener">arXiv</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@article{li2026nativelam,
+  title   = {World Models as Native Latent Action Models},
+  author  = {Li, Qinyue and Qiao, Weijie and Tao, Qingyi and Gong, Zerui and Yang, Zhe and Li, Quanzhou and Zhang, Taolin and He, Jinglin and Wu, Zhonghua and Loy, Chen Change},
+  journal = {arXiv preprint arXiv:2611.30898},
+  year    = {2026}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://www.sensenova.ai/has-gpt-6-astra-achieved-embodied-intelligence" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/papers/astra.mp4" poster="assets/papers/astra.jpg" muted loop playsinline preload="none" aria-label="GPT-6-Astra on eight real-robot platforms"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://www.sensenova.ai/has-gpt-6-astra-achieved-embodied-intelligence" target="_blank" rel="noopener">Has GPT-6-Astra Achieved Embodied Intelligence?<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Technical Report, 2026</span>
+          </div>
+          <div class="authors">SenseNova Joint Research Team</div>
+          <p class="tldr">A study of how far GPT-6-Astra goes as an embodied agent: 12 benchmarks across manipulation, humanoids, mobile platforms and dexterous hands, a System 2 reasoner with System 1 controller harness, and deployment on eight real robot configurations. It has largely crossed the threshold of embodied competence, but not yet of practical embodied intelligence.</p>
+          <div class="plinks">
+            <a href="https://www.sensenova.ai/has-gpt-6-astra-achieved-embodied-intelligence" target="_blank" rel="noopener">project page</a><span class="sep">/</span>
+            <a href="https://arxiv.org/abs/2610.22471" target="_blank" rel="noopener">arXiv</a><span class="sep">/</span>
+            <a href="https://github.com/OpenSenseNova/SenseNova-RoboRSI" target="_blank" rel="noopener">code</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@article{sensenova2026astra,
+  title   = {Has GPT-6-Astra Achieved Embodied Intelligence?},
+  author  = {{SenseNova Joint Research Team}},
+  journal = {arXiv preprint arXiv:2610.22471},
+  year    = {2026}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://mundo-world-model.github.io/" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/papers/mundo.mp4" poster="assets/papers/mundo.jpg" muted loop playsinline preload="none" aria-label="Mundo pipeline: input views, point-cloud reconstruction, 3D proxy, photorealistic rendering, and a humanoid acting in the scene"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://mundo-world-model.github.io/" target="_blank" rel="noopener">Mundo: Customized World Model<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Preprint, 2026</span>
+          </div>
+          <div class="authors">Yihang Luo, Zunnan Xu, Shangchen Zhou, Yushi Lan, Kang Liao, Zerui Gong, Xiaoming Wu, Qingyi Tao, Zhonghua Wu, Bixuan Jin, Fei Wang, Zhi Hou, Xiaogang Wang, Xingang Pan, Chen Change Loy</div>
+          <p class="tldr">Builds a simulatable world from a few images of a place: the scene is reconstructed as a 3D proxy refined by a VLM agent, a scene program and simulator compute how objects move, and a video model renders the result with the input images as context. The world can be explored from new viewpoints, edited, and used for robot tasks.</p>
+          <div class="plinks">
+            <a href="https://mundo-world-model.github.io/" target="_blank" rel="noopener">project page</a><span class="sep">/</span>
+            <a href="https://huggingface.co/blog/Luo-Yihang/mundo-world-model" target="_blank" rel="noopener">blog</a><span class="sep">/</span>
+            <a href="https://github.com/Luo-Yihang/Mundo" target="_blank" rel="noopener">code</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@article{luo2026mundo,
+  title   = {Mundo: Customized World Model},
+  author  = {Luo, Yihang and Xu, Zunnan and Zhou, Shangchen and Lan, Yushi and Liao, Kang and Gong, Zerui and Wu, Xiaoming and Tao, Qingyi and Wu, Zhonghua and Jin, Bixuan and Wang, Fei and Hou, Zhi and Wang, Xiaogang and Pan, Xingang and Loy, Chen Change},
+  journal = {Preprint},
+  year    = {2026}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb slides" href="https://arxiv.org/abs/2604.22302" target="_blank" rel="noopener" title="Inspect figures">
+          <img class="s on" src="assets/papers/kv.jpg" alt="KVBench examples" loading="lazy">
+          <img class="s" src="assets/papers/kv-2.jpg" alt="Checklist-guided refinement method" loading="lazy">
+          <img class="s" src="assets/papers/kv-3.jpg" alt="Checklist-based evaluation" loading="lazy">
+          <img class="s" src="assets/papers/kv-4.jpg" alt="Dataset construction from textbooks" loading="lazy">
+          <span class="sbar" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://arxiv.org/abs/2604.22302" target="_blank" rel="noopener">Knowledge Visualization: A Benchmark and Method for Knowledge-Intensive Text-to-Image Generation<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">arXiv, 2026</span>
+          </div>
+          <div class="authors">Ran Zhao, Sheng Jin, Size Wu, Kang Liao, Zerui Gong, Zujin Guo, Yang Xiao, Wei Li</div>
+          <p class="tldr">KVBench: 1,800 expert-curated prompts from over 30 high-school textbooks in six subjects, on which 14 text-to-image models show clear gaps in scientific correctness. KE-Check enriches prompts with domain knowledge, then edits images against a checklist of constraints, narrowing the gap between open and closed models.</p>
+          <div class="plinks">
+            <a href="https://arxiv.org/abs/2604.22302" target="_blank" rel="noopener">arXiv</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@article{zhao2026kv,
+  title   = {Knowledge Visualization: A Benchmark and Method for Knowledge-Intensive Text-to-Image Generation},
+  author  = {Zhao, Ran and Jin, Sheng and Wu, Size and Liao, Kang and Gong, Zerui and Guo, Zujin and Xiao, Yang and Li, Wei},
+  journal = {arXiv preprint arXiv:2604.22302},
+  year    = {2026}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb slides" href="https://ry3ng.github.io/SA-LUT" target="_blank" rel="noopener" title="Inspect figures">
+          <img class="s on" src="assets/papers/salut.jpg" alt="SA-LUT compared with a 3D LUT" loading="lazy">
+          <img class="s" src="assets/papers/salut-3.jpg" alt="PST50 benchmark examples" loading="lazy">
+          <img class="s" src="assets/papers/salut-4.jpg" alt="SA-LUT architecture" loading="lazy">
+          <span class="sbar" aria-hidden="true"><i></i><i></i><i></i></span>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://ry3ng.github.io/SA-LUT" target="_blank" rel="noopener">SA-LUT: Spatial Adaptive 4D Look-Up Table for Photorealistic Style Transfer<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pub">ICCV, 2025</span>
+          </div>
+          <div class="authors">Zerui Gong, Zhonghua Wu, Qingyi Tao, Qinyue Li, Chen Change Loy</div>
+          <p class="tldr">Combines LUT efficiency with neural adaptability: a style-guided 4D LUT plus a context map from content-style cross-attention gives spatially adaptive colour transfer that preserves structure. Introduces the PST50 benchmark; 66.7% lower LPIPS than 3D LUT methods, at 16 FPS on video.</p>
+          <div class="plinks">
+            <a href="https://ry3ng.github.io/SA-LUT" target="_blank" rel="noopener">project page</a><span class="sep">/</span>
+            <a href="https://arxiv.org/abs/2506.13465" target="_blank" rel="noopener">arXiv</a><span class="sep">/</span>
+            <a href="https://github.com/Ry3nG/SA-LUT" target="_blank" rel="noopener">code</a><span class="sep">/</span>
+            <a href="https://huggingface.co/datasets/zrgong/PST50" target="_blank" rel="noopener">PST50</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@inproceedings{gong2025salut,
+  title     = {SA-LUT: Spatial Adaptive 4D Look-Up Table for Photorealistic Style Transfer},
+  author    = {Gong, Zerui and Wu, Zhonghua and Tao, Qingyi and Li, Qinyue and Loy, Chen Change},
+  booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+  year      = {2025}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb slides" href="https://arxiv.org/abs/2505.23661" target="_blank" rel="noopener" title="Inspect figures">
+          <img class="s on" src="assets/papers/openuni.jpg" alt="Images generated by OpenUni" loading="lazy">
+          <img class="s" src="assets/papers/openuni-2.jpg" alt="More images generated by OpenUni" loading="lazy">
+          <span class="sbar" aria-hidden="true"><i></i><i></i></span>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://arxiv.org/abs/2505.23661" target="_blank" rel="noopener">OpenUni: A Simple Baseline for Unified Multimodal Understanding and Generation<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">arXiv, 2025</span>
+          </div>
+          <div class="authors">Size Wu, Zhonghua Wu, Zerui Gong, Qingyi Tao, Sheng Jin, Qinyue Li, Wei Li, Chen Change Loy</div>
+          <p class="tldr">Bridges an off-the-shelf multimodal LLM and a diffusion model with learnable queries and a light transformer connector. Strong results on GenEval, DPG-Bench and WISE with only 1.1B and 3.1B activated parameters; all weights, code and 23M training image-text pairs are released.</p>
+          <div class="plinks">
+            <a href="https://arxiv.org/abs/2505.23661" target="_blank" rel="noopener">arXiv</a><span class="sep">/</span>
+            <a href="https://github.com/wusize/OpenUni" target="_blank" rel="noopener">code</a><span class="sep">/</span>
+            <button type="button" data-bib aria-expanded="false">BibTeX</button>
+          </div>
+          <div class="bib-wrap" aria-hidden="true" inert>
+            <div class="bib-inner">
+              <div class="bib-box">
+                <div class="bib-head"><span class="bib-label">BibTeX</span><button type="button" class="copy-bib">Copy</button></div>
+<pre>@article{wu2025openuni,
+  title   = {OpenUni: A Simple Baseline for Unified Multimodal Understanding and Generation},
+  author  = {Wu, Size and Wu, Zhonghua and Gong, Zerui and Tao, Qingyi and Jin, Sheng and Li, Qinyue and Li, Wei and Loy, Chen Change},
+  journal = {arXiv preprint arXiv:2505.23661},
+  year    = {2025}
+}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <p class="note reveal"><sup>*</sup> Equal contribution &nbsp;&middot;&nbsp; <sup>†</sup> Project lead</p>
+  </section>
+
+  <!-- ── Experience ── -->
+  <section id="experience">
+    <div class="sec-head reveal">
+      <h2>Experience</h2>
+      <div class="sec-rule" aria-hidden="true"></div>
+    </div>
+    <ul class="tl">
+      <li class="now reveal">
+        <span class="when">2025.09 – now</span>
+        <span class="what"><b>Algorithm Research Intern</b>, SenseTime, Singapore<small>Embodied intelligence and world models</small></span>
+      </li>
+      <li class="reveal">
+        <span class="when">2023.06 – 2023.12</span>
+        <span class="what"><b>R&amp;D Intern</b>, Olympus APAC, Singapore</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── Education ── -->
+  <section id="education">
+    <div class="sec-head reveal">
+      <h2>Education</h2>
+      <div class="sec-rule" aria-hidden="true"></div>
+    </div>
+    <ul class="tl">
+      <li class="now reveal">
+        <span class="when">2025 – 2026</span>
+        <span class="what"><b>M.Sc. in Robotics</b>, National University of Singapore</span>
+      </li>
+      <li class="reveal">
+        <span class="when">2021 – 2025</span>
+        <span class="what">
+          <b>B.Eng. in Computer Engineering</b>, Nanyang Technological University
+          <div><span class="award-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>ITMA Gold Medal</span></div>
+        </span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── Beyond Research ── -->
+  <section id="community">
+    <div class="sec-head reveal">
+      <h2>Beyond Research</h2>
+      <div class="sec-rule" aria-hidden="true"></div>
+    </div>
+    <div class="papers">
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://ry3ng.github.io/GenieTerm/" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/beyond/genieterm.mp4" poster="assets/beyond/genieterm.jpg" muted loop playsinline preload="none" aria-label="GenieTerm product film opening"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://ry3ng.github.io/GenieTerm/" target="_blank" rel="noopener">GenieTerm<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Open source · 2026</span>
+          </div>
+          <p class="tldr">An open-source terminal for working across machines: durable SSH sessions, remote files, GPU and port views, and command help from the AI you already use. macOS, Linux and Windows.</p>
+          <div class="plinks">
+            <a href="https://ry3ng.github.io/GenieTerm/" target="_blank" rel="noopener">website</a><span class="sep">/</span>
+            <a href="https://github.com/Ry3nG/GenieTerm" target="_blank" rel="noopener">code</a><span class="sep">/</span>
+            <a href="https://github.com/Ry3nG/GenieTerm/releases/latest" target="_blank" rel="noopener">download</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://github.com/Ry3nG/Pogo-G1" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/beyond/pogo.mp4" poster="assets/beyond/pogo.jpg" muted loop playsinline preload="none" aria-label="A Unitree G1 humanoid hopping on a pogo stick in simulation"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://github.com/Ry3nG/Pogo-G1" target="_blank" rel="noopener">Pogo-G1: A Humanoid on a Pogo Stick<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Side project · 2026</span>
+          </div>
+          <p class="tldr">A Unitree G1 with Revo2 hands learns to ride a passive pogo stick with PPO in MuJoCo Warp: 1 m hops, turning on command, and climbing stairs.</p>
+          <div class="plinks">
+            <a href="https://github.com/Ry3nG/Pogo-G1" target="_blank" rel="noopener">code</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="paper reveal">
+        <a class="thumb" href="https://team6907.org/" target="_blank" rel="noopener" title="Inspect preview">
+          <video src="assets/beyond/frc.mp4" poster="assets/beyond/frc.jpg" muted loop playsinline preload="none" aria-label="FRC Team 6907 robot in a 2026 match"></video>
+        </a>
+        <div class="pbody">
+          <a class="ptitle" href="https://team6907.org/" target="_blank" rel="noopener">FIRST Robotics Competition Team 6907<span class="arr" aria-hidden="true">&#8599;</span></a>
+          <div class="pmeta">
+            <span class="venue pre">Mentor · 2021 – now</span>
+          </div>
+          <p class="tldr">Mentor and former captain.</p>
+          <div class="plinks">
+            <a href="https://team6907.org/" target="_blank" rel="noopener">team6907.org</a><span class="sep">/</span>
+            <a href="https://lab.team6907.org/" target="_blank" rel="noopener">GOATLab</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>Last updated November 2026</span>
+    <span class="foot-right">
+      <span>Zerui Gong</span>
+      <button class="foot-btn" id="back-top" type="button" aria-label="Back to top">&#8593; Top</button>
+    </span>
+  </footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite" inert>
+  <span id="toast-msg">Copied email</span>
+  <a id="toast-mail" href="#">Open Mail &#8599;</a>
+</div>
+
+<dialog class="lb" id="lightbox" aria-label="Media preview">
+  <div class="lb-shell">
+    <div class="lb-stage" id="lb-stage">
+      <button class="lb-nav prev" id="lb-prev" type="button" aria-label="Previous figure" hidden>&#8249;</button>
+      <button class="lb-nav next" id="lb-next" type="button" aria-label="Next figure" hidden>&#8250;</button>
+    </div>
+    <div class="lb-bar">
+      <div class="lb-meta">
+        <p class="lb-title" id="lb-title"></p>
+        <p class="lb-cap"><span class="lb-count" id="lb-count" hidden></span><span class="lb-cap-text" id="lb-cap"></span></p>
+      </div>
+      <div class="lb-actions">
+        <a class="lb-ext" id="lb-ext" href="#" target="_blank" rel="noopener">Project page &#8599;</a>
+        <button class="lb-close" id="lb-close" type="button" aria-label="Close preview">&times;</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+
+  /* ── Email obfuscation + click-to-copy + floating toast ── */
+  var u = 'gongzerui13', d = 'gmail.com';
+  var addr = u + '@' + d;
+  var emailBtn = document.getElementById('email-btn');
+  var emailLabel = document.getElementById('email-label');
+  var toast = document.getElementById('toast');
+  var toastMsg = document.getElementById('toast-msg');
+  var toastMail = document.getElementById('toast-mail');
+  toastMail.href = 'mailto:' + addr;
+  var toastTimer;
+
+  function showToast(msg, showMail) {
+    toastMsg.textContent = msg;
+    toastMail.style.display = showMail ? 'inline' : 'none';
+    toast.removeAttribute('inert');
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toast.classList.remove('show');
+      toast.setAttribute('inert', '');
+    }, 3200);
+  }
+
+  emailBtn.addEventListener('click', function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(addr).then(function () {
+        emailBtn.classList.add('copied');
+        emailLabel.textContent = 'Copied';
+        showToast('Copied ' + addr, true);
+        setTimeout(function () {
+          emailBtn.classList.remove('copied');
+          emailLabel.textContent = 'Email';
+        }, 1800);
+      }).catch(function () {
+        location.href = 'mailto:' + addr;
+      });
+    } else {
+      location.href = 'mailto:' + addr;
+    }
+  });
+
+  /* ── Smooth BibTeX Accordion + Copy (with inert focus management) ── */
+  function closeAllBib() {
+    document.querySelectorAll('.bib-wrap.open').forEach(function (wrap) {
+      wrap.classList.remove('open');
+      wrap.setAttribute('aria-hidden', 'true');
+      wrap.setAttribute('inert', '');
+      var b = wrap.closest('.paper').querySelector('[data-bib]');
+      if (b) b.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  document.querySelectorAll('[data-bib]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.paper').querySelector('.bib-wrap');
+      var open = wrap.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      wrap.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (open) wrap.removeAttribute('inert');
+      else wrap.setAttribute('inert', '');
+    });
+  });
+
+  document.querySelectorAll('.copy-bib').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.closest('.bib-box').querySelector('pre').textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          btn.classList.add('copied');
+          btn.textContent = 'Copied \u2713';
+          showToast('BibTeX copied to clipboard', false);
+          setTimeout(function () {
+            btn.classList.remove('copied');
+            btn.textContent = 'Copy';
+          }, 1800);
+        });
+      }
+    });
+  });
+
+  /* ── Theme toggle with View Transitions radial reveal ── */
+  var themeBtn = document.getElementById('theme');
+  function applyTheme(next) {
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  }
+
+  function toggleTheme(ev) {
+    var isDark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    var next = isDark ? 'light' : 'dark';
+
+    if (reduced || !document.startViewTransition) {
+      applyTheme(next);
+      return;
+    }
+
+    var rect = themeBtn.getBoundingClientRect();
+    var x = (ev && ev.clientX) || (rect.left + rect.width / 2);
+    var y = (ev && ev.clientY) || (rect.top + rect.height / 2);
+    var endR = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+    var vt = document.startViewTransition(function () { applyTheme(next); });
+    vt.ready.then(function () {
+      document.documentElement.animate(
+        { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + endR + 'px at ' + x + 'px ' + y + 'px)'] },
+        { duration: 480, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(function () {});
+  }
+  themeBtn.addEventListener('click', toggleTheme);
+
+  /* ── Unified rAF-throttled scroll: progress hairline + frosted topbar + timeline rails ── */
+  var progress = document.getElementById('progress');
+  var topbar = document.getElementById('topbar');
+  var brandMini = document.getElementById('brand-mini');
+  var rails = Array.prototype.slice.call(document.querySelectorAll('.tl'));
+  var scrollTick = false;
+
+  function offsetIn(el, anc) {
+    var x = 0, y = 0;
+    while (el && el !== anc) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+    return { x: x, y: y };
+  }
+
+  function measureRails() {
+    rails.forEach(function (tl) {
+      var nodes = tl.querySelectorAll('.when');
+      if (nodes.length < 2) { tl.style.setProperty('--rail-h', '0px'); return; }
+      var first = offsetIn(nodes[0], tl).y + 13;
+      var last = offsetIn(nodes[nodes.length - 1], tl).y + 13;
+      tl._top = first; tl._h = Math.max(0, last - first);
+      tl.style.setProperty('--rail-top', first + 'px');
+      tl.style.setProperty('--rail-h', tl._h + 'px');
+    });
+  }
+
+  function fillRails() {
+    var line = innerHeight * (reduced ? 2 : 0.62);
+    rails.forEach(function (tl) {
+      if (!tl._h) return;
+      var top = tl.getBoundingClientRect().top + tl._top;
+      var f = Math.max(0, Math.min(1, (line - top) / tl._h));
+      tl.style.setProperty('--fill', f.toFixed(3));
+      tl.querySelectorAll('li').forEach(function (li) {
+        var y = li.querySelector('.when').getBoundingClientRect().top + 13;
+        li.classList.toggle('lit', y <= line);
+      });
+    });
+  }
+
+  function onScroll() {
+    var y = scrollY || document.documentElement.scrollTop;
+    var max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+    progress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, y / max)) + ')';
+    var scrolled = y > 130;
+    topbar.classList.toggle('scrolled', scrolled);
+    if (brandMini) brandMini.tabIndex = scrolled ? 0 : -1;
+    fillRails();
+    scrollTick = false;
+  }
+
+  addEventListener('scroll', function () {
+    if (!scrollTick) { scrollTick = true; requestAnimationFrame(onScroll); }
+  }, { passive: true });
+  measureRails();
+  onScroll();
+
+  document.getElementById('back-top').addEventListener('click', function () {
+    scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+  });
+
+  /* ── Active nav section + gliding pill indicator ── */
+  var navLinksWrap = document.getElementById('nav-links');
+  var navPill = document.getElementById('nav-pill');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var navSecs = navLinks.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  var picked = -1, navTick = false;
+
+  function placePill(cur) {
+    if (!navPill || !navLinksWrap) return;
+    if (cur < 0 || !navLinks[cur]) {
+      navPill.classList.remove('show');
+      return;
+    }
+    var a = navLinks[cur];
+    navPill.style.width = a.offsetWidth + 'px';
+    navPill.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+    navPill.classList.add('show');
+  }
+
+  function updateNav() {
+    var line = innerHeight * 0.4, cur = -1;
+    navSecs.forEach(function (sec, i) { if (sec && sec.getBoundingClientRect().top <= line) cur = i; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = navSecs.length - 1;
+    if (picked >= 0) cur = picked;
+    navLinks.forEach(function (a, i) { a.classList.toggle('active', i === cur); });
+    placePill(cur);
+    navTick = false;
+  }
+  function queueNav() { if (!navTick) { navTick = true; requestAnimationFrame(updateNav); } }
+  addEventListener('scroll', queueNav, { passive: true });
+  addEventListener('resize', function () { measureRails(); fillRails(); queueNav(); });
+  navLinks.forEach(function (a, i) { a.addEventListener('click', function () { picked = i; queueNav(); }); });
+  ['wheel', 'touchmove', 'keydown'].forEach(function (ev) {
+    addEventListener(ev, function () { if (picked >= 0) { picked = -1; queueNav(); } }, { passive: true });
+  });
+  updateNav();
+
+  /* ── Scroll reveal for sections, papers, timeline ── */
+  var reveals = document.querySelectorAll('.reveal');
+  if (!reduced && 'IntersectionObserver' in window) {
+    var revIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+    reveals.forEach(function (el) { revIo.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ── Play teaser clips only while visible ── */
+  var vids = document.querySelectorAll('.thumb video');
+  if (!reduced && 'IntersectionObserver' in window) {
+    var vidIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.preload = 'auto';
+          var p = e.target.play();
+          if (p) p.catch(function () {});
+        } else {
+          e.target.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { vidIo.observe(v); });
+  }
+
+  /* ── Coordinates decode + click-to-toggle live Singapore local time (SGT) ── */
+  var COORDS_TEXT = '1.2966\u00b0 N, 103.7764\u00b0 E';
+  var locMode = 'coords';
+  var sgtFmt = null;
+  try {
+    sgtFmt = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Asia/Singapore',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    });
+  } catch (e) {}
+
+  function formatSGT() {
+    if (!sgtFmt) return COORDS_TEXT;
+    return sgtFmt.format(new Date()).replace(',', '') + ' SGT \u00b7 UTC+8';
+  }
+
+  function decodeTo(el, target, delay) {
+    if (reduced) { el.textContent = target; return; }
+    var start = performance.now(), dur = 680, wait = delay || 0;
+    var token = (el._decToken || 0) + 1;
+    el._decToken = token;
+    (function tick(now) {
+      if (el._decToken !== token) return;
+      var t = Math.min(1, (now - start - wait) / dur);
+      if (t < 0) { requestAnimationFrame(tick); return; }
+      var settled = Math.floor(t * target.length), out = '';
+      for (var i = 0; i < target.length; i++) {
+        var ch = target[i];
+        out += (i >= settled && /\d/.test(ch)) ? String((Math.random() * 10) | 0) : ch;
+      }
+      el.textContent = t < 1 ? out : target;
+      if (t < 1) requestAnimationFrame(tick);
+    })(performance.now());
+  }
+
+  if (!reduced) {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-coords]'), function (el) {
+      if (!el.offsetParent) return;
+      decodeTo(el, COORDS_TEXT, el.closest('.callout') ? 1250 : 250);
+    });
+  }
+
+  document.querySelectorAll('[data-loc-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      locMode = locMode === 'coords' ? 'time' : 'coords';
+      var text = locMode === 'time' ? formatSGT() : COORDS_TEXT;
+      document.querySelectorAll('[data-coords]').forEach(function (el) {
+        if (el.offsetParent) decodeTo(el, text, 0);
+        else el.textContent = text;
+      });
+    });
+  });
+
+  setInterval(function () {
+    if (locMode !== 'time') return;
+    var text = formatSGT();
+    document.querySelectorAll('[data-coords]').forEach(function (el) { el.textContent = text; });
+  }, 15000);
+
+  /* ── Anchor the map: Singapore pin in the open gap right of the name, level with it ── */
+  var geoEl = document.getElementById('geo');
+  var introEl = document.querySelector('.intro');
+  var nameEl = document.querySelector('.name-row');
+  var portraitEl = document.getElementById('portrait');
+  function placeGeo() {
+    if (!geoEl || !introEl || !nameEl || !portraitEl || geoEl.offsetParent === null) return;
+    var n = offsetIn(nameEl, introEl), p = offsetIn(portraitEl, introEl);
+    var px = p.x - 34, py = n.y + nameEl.offsetHeight * 0.42;
+    geoEl.style.left = (px - 1100 * 0.78839).toFixed(1) + 'px';
+    geoEl.style.top = (py - 391 * 0.55211).toFixed(1) + 'px';
+  }
+  placeGeo();
+  addEventListener('resize', placeGeo);
+  if (document.fonts) {
+    document.fonts.ready.then(function () {
+      placeGeo();
+      measureRails();
+      fillRails();
+      updateNav();
+    });
+  }
+
+  /* ── Hero map drifts gently against the pointer ── */
+  if (geoEl && introEl && !reduced && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    introEl.addEventListener('pointermove', function (e) {
+      var r = introEl.getBoundingClientRect();
+      var nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
+      geoEl.style.setProperty('--gx', (nx * -10).toFixed(1) + 'px');
+      geoEl.style.setProperty('--gy', (ny * -6).toFixed(1) + 'px');
+    });
+    introEl.addEventListener('pointerleave', function () { geoEl.style.setProperty('--gx', '0px'); geoEl.style.setProperty('--gy', '0px'); });
+  }
+
+  /* ── Figure slideshows: auto-advance, pause on hover/off-screen, and click-to-jump on bars ── */
+  document.querySelectorAll('.thumb.slides').forEach(function (box) {
+    var imgs = box.querySelectorAll('img.s'), bars = box.querySelectorAll('.sbar i');
+    if (imgs.length < 2) return;
+    var idx = 0, visible = false, hover = false;
+    box._slideIdx = 0;
+
+    function setPaused() { box.classList.toggle('paused', !visible || hover); }
+    function show(n) {
+      imgs[idx].classList.remove('on');
+      idx = ((n % imgs.length) + imgs.length) % imgs.length;
+      box._slideIdx = idx;
+      imgs[idx].classList.add('on');
+      bars.forEach(function (b, i) {
+        b.classList.remove('run');
+        b.classList.toggle('done', i < idx);
+      });
+      if (!reduced) {
+        void bars[idx].offsetWidth;
+        bars[idx].classList.add('run');
+      } else {
+        bars[idx].classList.add('done');
+      }
+    }
+
+    bars.forEach(function (b, i) {
+      b.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        box.classList.add('live');
+        show(i);
+      });
+      if (!reduced) {
+        b.addEventListener('animationend', function () { show(idx + 1); });
+      }
+    });
+
+    if (reduced) {
+      box.classList.add('live');
+      bars[0].classList.add('done');
+      return;
+    }
+
+    box.addEventListener('pointerenter', function () { hover = true; setPaused(); });
+    box.addEventListener('pointerleave', function () { hover = false; setPaused(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          visible = e.isIntersecting;
+          if (visible && !box.classList.contains('live')) { box.classList.add('live'); bars[0].classList.add('run'); }
+          setPaused();
+        });
+      }, { threshold: 0.35 }).observe(box);
+    }
+  });
+
+  /* ── Native <dialog> Theater Lightbox for paper figures & videos ── */
+  var lb = document.getElementById('lightbox');
+  var lbStage = document.getElementById('lb-stage');
+  var lbTitle = document.getElementById('lb-title');
+  var lbCap = document.getElementById('lb-cap');
+  var lbCount = document.getElementById('lb-count');
+  var lbExt = document.getElementById('lb-ext');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var lbState = { type: null, items: [], idx: 0 };
+
+  function clearStageMedia() {
+    Array.prototype.slice.call(lbStage.querySelectorAll('img, video')).forEach(function (n) {
+      if (n.tagName === 'VIDEO') { try { n.pause(); } catch (e) {} }
+      n.remove();
+    });
+  }
+
+  function renderLbSlide(n) {
+    var len = lbState.items.length;
+    lbState.idx = ((n % len) + len) % len;
+    var item = lbState.items[lbState.idx];
+    clearStageMedia();
+    var img = document.createElement('img');
+    img.src = item.src;
+    img.alt = item.alt;
+    lbStage.insertBefore(img, lbPrev);
+    lbCap.textContent = item.alt || '';
+    lbCount.textContent = (lbState.idx + 1) + ' / ' + len;
+    lbCount.hidden = len < 2;
+    lbPrev.hidden = len < 2;
+    lbNext.hidden = len < 2;
+  }
+
+  function openLightbox(thumb) {
+    if (!lb || !lb.showModal) return false;
+    var paper = thumb.closest('.paper');
+    var titleEl = paper ? paper.querySelector('.ptitle') : null;
+    var titleText = titleEl ? titleEl.textContent.replace(/\u2197/g, '').trim() : '';
+    var href = (titleEl && titleEl.getAttribute('href')) || thumb.getAttribute('href') || '#';
+    lbTitle.textContent = titleText;
+    lbExt.href = href;
+    clearStageMedia();
+
+    var vid = thumb.querySelector('video');
+    if (vid) {
+      lbState = { type: 'video', items: [], idx: 0 };
+      var v = document.createElement('video');
+      v.src = vid.getAttribute('src');
+      if (vid.getAttribute('poster')) v.poster = vid.getAttribute('poster');
+      v.controls = true;
+      v.loop = true;
+      v.muted = true;
+      v.playsInline = true;
+      v.autoplay = !reduced;
+      v.setAttribute('aria-label', vid.getAttribute('aria-label') || titleText);
+      lbStage.insertBefore(v, lbPrev);
+      lbCap.textContent = vid.getAttribute('aria-label') || '';
+      lbCount.hidden = true;
+      lbPrev.hidden = true;
+      lbNext.hidden = true;
+    } else {
+      var imgs = Array.prototype.slice.call(thumb.querySelectorAll('img'));
+      if (!imgs.length) return false;
+      lbState = {
+        type: 'slides',
+        items: imgs.map(function (im) { return { src: im.getAttribute('src'), alt: im.getAttribute('alt') || '' }; }),
+        idx: thumb._slideIdx || 0
+      };
+      renderLbSlide(lbState.idx);
+    }
+
+    lb.showModal();
+    return true;
+  }
+
+  document.querySelectorAll('.thumb').forEach(function (thumb) {
+    thumb.addEventListener('click', function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (openLightbox(thumb)) e.preventDefault();
+    });
+  });
+
+  if (lb) {
+    lbPrev.addEventListener('click', function () { if (lbState.type === 'slides') renderLbSlide(lbState.idx - 1); });
+    lbNext.addEventListener('click', function () { if (lbState.type === 'slides') renderLbSlide(lbState.idx + 1); });
+    lbClose.addEventListener('click', function () { lb.close(); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) lb.close(); });
+    lb.addEventListener('close', clearStageMedia);
+  }
+
+  /* ── Quiet keyboard shortcuts: T theme, Esc close BibTeX, Arrows step lightbox ── */
+  addEventListener('keydown', function (e) {
+    var tag = e.target && e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (e.target && e.target.isContentEditable)) return;
+
+    if (lb && lb.open) {
+      if (e.key === 'ArrowLeft' && lbState.type === 'slides') { e.preventDefault(); renderLbSlide(lbState.idx - 1); }
+      else if (e.key === 'ArrowRight' && lbState.type === 'slides') { e.preventDefault(); renderLbSlide(lbState.idx + 1); }
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      closeAllBib();
+    } else if ((e.key === 't' || e.key === 'T') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      toggleTheme();
+    }
+  });
+
+  /* ── Subtle pointer spotlight on cards + portrait parallax (desktop fine pointer only) ── */
+  if (!reduced && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var portrait = document.getElementById('portrait');
+    if (portrait) {
+      portrait.addEventListener('pointermove', function (e) {
+        var r = portrait.getBoundingClientRect();
+        var nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        var ny = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        portrait.style.setProperty('--px', (nx * 4.5).toFixed(2) + 'px');
+        portrait.style.setProperty('--py', (ny * 4.5).toFixed(2) + 'px');
+      });
+      portrait.addEventListener('pointerleave', function () {
+        portrait.style.setProperty('--px', '0px');
+        portrait.style.setProperty('--py', '0px');
+      });
+    }
+  }
+})();
+</script>
+</body>
+</html>
